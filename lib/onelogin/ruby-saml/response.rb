@@ -13,7 +13,7 @@ module OneLogin
 
       # Encryption related
       PLAINTEXT_ASSERTION_PATH = "/samlp:Response/Assertion"
-      ENCRYPTED_RESPONSE_PATH = "(/samlp:Response/EncryptedAssertion/)|(/samlp:Response/saml:EncryptedAssertion/)"
+      ENCRYPTED_RESPONSE_PATH = "(/samlp:Response/EncryptedAssertion/)|(/samlp:Response/saml:EncryptedAssertion/)|(/saml2p:Response/saml2:EncryptedAssertion/)"
       ENCRYPTED_RESPONSE_DATA_PATH = "./xenc:EncryptedData"
       ENCRYPTION_METHOD_PATH = "./xenc:EncryptionMethod"
       ENCRYPTED_AES_KEY_PATH = "(./KeyInfo/e:EncryptedKey/e:CipherData/e:CipherValue)|(./ds:KeyInfo/xenc:EncryptedKey/xenc:CipherData/xenc:CipherValue)"
