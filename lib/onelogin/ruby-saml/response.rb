@@ -18,7 +18,7 @@ module OneLogin
       ENCRYPTION_METHOD_PATH = "./xenc:EncryptionMethod"
       ENCRYPTED_AES_KEY_PATH = "(./KeyInfo/e:EncryptedKey/e:CipherData/e:CipherValue)|(./ds:KeyInfo/xenc:EncryptedKey/xenc:CipherData/xenc:CipherValue)"
       ENCRYPTED_ASSERTION_PATH = "./xenc:CipherData/xenc:CipherValue"
-      RSA_PKCS1_OAEP_PADDING = 4
+      RSA_PKCS1_OAEP_PADDING = 2 # this only works for AES-128, use 4 for AES-256
       ENCRYTPION_ALGORITHMS = {
           'http://www.w3.org/2001/04/xmlenc#aes128-cbc' => 'AES-128-CBC',
           'http://www.w3.org/2001/04/xmlenc#aes256-cbc' => 'AES-256-CBC'
