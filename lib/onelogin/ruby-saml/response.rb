@@ -12,7 +12,7 @@ module OneLogin
       DSIG      = "http://www.w3.org/2000/09/xmldsig#"
 
       # Encryption related
-      PLAINTEXT_ASSERTION_PATH = "/samlp:Response/Assertion"
+      PLAINTEXT_ASSERTION_PATH = "/samlp:Response/Assertion|/saml2p:Response/Assertion"
       ENCRYPTED_RESPONSE_PATH = "(/samlp:Response/EncryptedAssertion/)|(/samlp:Response/saml:EncryptedAssertion/)|(/saml2p:Response/saml2:EncryptedAssertion/)"
       ENCRYPTED_RESPONSE_DATA_PATH = "./xenc:EncryptedData"
       ENCRYPTION_METHOD_PATH = "./xenc:EncryptionMethod"
@@ -137,10 +137,10 @@ module OneLogin
       def assertion_document
         @assertion_document ||= begin
           if document.elements[ENCRYPTED_RESPONSE_PATH]
-            if sig_element = document.elements['/samlp:Response/ds:Signature']
+            if sig_element = document.elements['/samlp:Response/ds:Signature|/saml2p:Response/ds:Signature']
               sig_element.remove #Skipping signature verification - Assertion is already signed andit will be verified.
             end
-            document.elements['/samlp:Response/'].add(decrypt_assertion_document)
+            document.elements['/saml2p:Response/'].add(decrypt_assertion_document)
             document.elements[ENCRYPTED_RESPONSE_PATH].remove
             XMLSecurity::SignedDocument.new(document.to_s)
           else
@@ -256,7 +256,7 @@ module OneLogin
         assertion_plaintext << aes_cipher.final
         # We get some problematic noise in the plaintext after decrypting.
         # This quick regexp parse will grab only the assertion and discard the noise.
-        assertion_plaintext.match(/(.*<\/(saml:|)Assertion>)/m)[0]
+        assertion_plaintext.match(/(.*<\/(saml2:|)Assertion>)/m)[0]
       end
     end
   end
